@@ -1,5 +1,6 @@
 {
 	"require": {
-		"slim/slim": "~2.5"
+		"slim/slim": "~2.5",
+		"clickcode/slim-blade": "dev-master"
 	}
 }
