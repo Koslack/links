@@ -2,6 +2,7 @@
 	"require": {
 		"slim/slim": "~2.5",
 		"clickcoder/slim-blade": "dev-master",
-		"j4mie/idiorm": "~1.5"
+		"j4mie/idiorm": "~1.5",
+		"form-manager/form-manager": "~4.0"
 	}
 }
