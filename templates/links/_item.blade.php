@@ -1,1 +1,1 @@
-{{$link->url}}
+<a href="{{$app->urlFor('link.show', ['id' => $link->id])}}">show</a> - <a href="{{$link->url}}">{{$link->name}}</a> - <a href="{{$app->urlFor('link.edit', ['id' => $link->id])}}">edit</a> - <a href="{{$app->urlFor('link.delete', ['id' => $link->id])}}">delete</a>
