@@ -1,3 +1,13 @@
+@if(isset($flash['link.name']))
+	<div class="alert alert-warning" role="alert">{{$flash['link.name']}}</div>
+@endif
+@if(isset($flash['link.url']))
+	<div class="alert alert-warning" role="alert">{{$flash['link.url']}}</div>
+@endif
+@if(isset($flash['link.status']))
+	<div class="alert alert-warning" role="alert">{{$flash['link.status']}}</div>
+@endif
+
 {{$form = FormManager\Builder::form()}}
 {{
 	$form->attr([
@@ -11,7 +21,7 @@
 			'favorite' => 'Favoritos',
 			'important' => 'Importante',
 			'great' => 'Genial'
-	    ])->addClass('form-control')->id('link_status')->required()->label('Link Status'),
+	    ])->addClass('form-control')->id('link_status')->label('Link Status'),
 	    'action' => FormManager\Builder::choose([
 	        'save' => FormManager\Builder::submit()->addClass('btn btn-primary pull-right')->html('Save Link')
 	    ])

@@ -55,11 +55,16 @@
 			->key('url', Respect\Validation\Validator::url()->length(3,128))
 			->key('status', Respect\Validation\Validator::string()->in(['favorite', 'important'], true)->notEmpty());
 
-		if($linkValidator->validate($link->asArray())
+		try {
+		    $linkValidator->assert($link->asArray());
 		    $link->save();
 			$app->redirect('/links/'.$link->id);
 		}
-		else{
+		catch(Respect\Validation\Exceptions\NestedValidationExceptionInterface $exception) {
+			$messages = $exception->findMessages(array('length', 'url', 'in', 'name', 'status'));
+			$app->flash('link.name', $messages['name']);
+			$app->flash('link.url', $messages['url']);
+			$app->flash('link.status', $messages['status']);
 			$app->redirect('/links/create/');
 		}
 	})->name('link.store');
