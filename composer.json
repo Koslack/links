@@ -2,8 +2,13 @@
 	"require": {
 		"slim/slim": "~2.5",
 		"clickcoder/slim-blade": "dev-master",
-		"j4mie/idiorm": "~1.5",
+		"j4mie/paris": "~1.5",
 		"form-manager/form-manager": "~4.0",
 		"respect/validation": "~0.8"
+	},
+	"autoload": {
+		"classmap": [
+			"app"
+		]
 	}
 }

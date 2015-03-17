@@ -4,7 +4,7 @@
 	@endforeach
 @endif
 
-{{$form = FormManager\Builder::form()}}
+{{$form = \FormManager\Builder::form()}}
 {{
 	$form->attr([
 	    'action' => isset($link) ? $app->urlFor('link.update', ['id' => $link->id]) : $app->urlFor('link.store'),
@@ -14,16 +14,18 @@
 	    	->addClass('form-control')
 	    	->id('link_name')
 	    	->placeholder('Name ej. twitter')
-	    	->maxlength(64)
+	    	->maxlength(128)
 	    	->required()
-	    	->label('Link Name'),
+	    	->label('Link Name')
+	    	->val(isset($link) ? $link->name : ''),
 	    'uri' => FormManager\Builder::text()
 	    	->addClass('form-control')
 	    	->id('link_uri')
 	    	->placeholder('Uri ej. http://twitter.com')
-	    	->maxlength(64)
+	    	->maxlength(128)
 	    	->required()
-	    	->label('Link Uri'),
+	    	->label('Link Uri')
+	    	->val(isset($link) ? $link->uri : ''),
 	    'status' => FormManager\Builder::select()
 	    	->options([
 		    	'' => '-- Choose a Status --',
@@ -33,9 +35,8 @@
 		    ])
 		    ->addClass('form-control')
 		    ->id('link_status')
-		    ->label('Link Status'),
-	    'action' => FormManager\Builder::choose([
-	        'save' => FormManager\Builder::submit()->addClass('btn btn-primary pull-right')->html('Save Link')
-	    ])
+		    ->label('Link Status')
+		    ->val(isset($link) ? $link->status : ''),
+        'save' => FormManager\Builder::submit()->addClass('btn btn-primary pull-right')->html('Save Link')
 	])->loadFromGlobals()
 }}
