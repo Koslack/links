@@ -8,6 +8,7 @@
 		'view' => new \Slim\Views\Blade(),
 		'templates.path' => '../templates'
 	]);
+	$app->add(new \Slim\Middleware\SessionCookie());
 
 	$views = $app->view();
 	$views->parserOptions = [
@@ -43,11 +44,24 @@
 	# Defines /links POST route that handles the received data from the creation form
 	$app->post('/links', function() use ($app){
 		$link = ORM::forTable('links')->create();
-		$link->set('name', $_POST['name']);
-		$link->set('url', $_POST['url']);
-		$link->set('status', $_POST['status']);
-		$link->save();
-		$app->redirect('/links/'.$link->id);
+		$link->set([
+			'name' => $_POST['name'],
+			'url' => $_POST['url'],
+			'status' => $_POST['status']
+		]);
+
+		$linkValidator = Respect\Validation\Validator::
+			key('name', Respect\Validation\Validator::string()->notEmpty()->length(3,128))
+			->key('url', Respect\Validation\Validator::url()->length(3,128))
+			->key('status', Respect\Validation\Validator::string()->in(['favorite', 'important'], true)->notEmpty());
+
+		if($linkValidator->validate($link->asArray())
+		    $link->save();
+			$app->redirect('/links/'.$link->id);
+		}
+		else{
+			$app->redirect('/links/create/');
+		}
 	})->name('link.store');
 
 	# Defines /links/:id/edit/ route to show a form for a link edition
@@ -59,9 +73,11 @@
 	# Defines /links/:id POST route that handles the received data from the edition form
 	$app->post('/links/:id', function($id) use ($app){
 		$link = ORM::forTable('links')->findOne($id);
-		$link->set('name', $_POST['name']);
-		$link->set('url', $_POST['url']);
-		$link->set('status', $_POST['status']);
+		$link->set([
+			'name' => $_POST['name'],
+			'url' => $_POST['url'],
+			'status' => $_POST['status']
+		]);
 		$link->save();
 		$app->redirect('/links/'.$link->id);
 	})->name('link.update');
@@ -72,6 +88,11 @@
 		$link->delete();
 		$app->redirect('/links');
 	})->name('link.delete');
+
+	# Defines a notFound error page
+	$app->notFound(function () use ($app) {
+	    $app->render('error.404');
+	});
 
 	# Runs the links App
 	$app->run();
