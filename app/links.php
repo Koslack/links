@@ -35,7 +35,7 @@ class Links{
 
 		# Defines a notFound error page
 		$this->app->notFound(function(){
-		    $this->app->render('error.404');
+		    $this->app->render('errors.404');
 		});
 	}
 
