@@ -46,25 +46,23 @@
 		$link = ORM::forTable('links')->create();
 		$link->set([
 			'name' => $_POST['name'],
-			'url' => $_POST['url'],
+			'uri' => $_POST['uri'],
 			'status' => $_POST['status']
 		]);
 
 		$linkValidator = Respect\Validation\Validator::
 			key('name', Respect\Validation\Validator::string()->notEmpty()->length(3,128))
-			->key('url', Respect\Validation\Validator::url()->length(3,128))
+			->key('uri', Respect\Validation\Validator::url()->length(3,128))
 			->key('status', Respect\Validation\Validator::string()->in(['favorite', 'important'], true)->notEmpty());
-
+			
 		try {
 		    $linkValidator->assert($link->asArray());
 		    $link->save();
 			$app->redirect('/links/'.$link->id);
 		}
 		catch(Respect\Validation\Exceptions\NestedValidationExceptionInterface $exception) {
-			$messages = $exception->findMessages(array('length', 'url', 'in', 'name', 'status'));
-			$app->flash('link.name', $messages['name']);
-			$app->flash('link.url', $messages['url']);
-			$app->flash('link.status', $messages['status']);
+			$messages = $exception->findMessages(array('string', 'url', 'in', 'notEmpty', 'length'));
+			$app->flash('link.errors', $messages);
 			$app->redirect('/links/create/');
 		}
 	})->name('link.store');
@@ -80,7 +78,7 @@
 		$link = ORM::forTable('links')->findOne($id);
 		$link->set([
 			'name' => $_POST['name'],
-			'url' => $_POST['url'],
+			'uri' => $_POST['uri'],
 			'status' => $_POST['status']
 		]);
 		$link->save();
