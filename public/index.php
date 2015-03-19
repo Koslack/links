@@ -1,6 +1,6 @@
 <?php
 	require('../vendor/autoload.php');
 
-	$links = new \App\Links();
+	$manager = new \App\LinkManager();
 
-	$links->init();
+	$manager->init();

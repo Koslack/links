@@ -7,7 +7,7 @@
 {{$form = \FormManager\Builder::form()}}
 {{
 	$form->attr([
-	    'action' => isset($link) ? $app->urlFor('link.update', ['id' => $link->id]) : $app->urlFor('link.store'),
+	    'action' => isset($link) ? $app->urlFor('links.update', ['id' => $link->id]) : $app->urlFor('links.store'),
 	    'method' => 'post'
 	])->add([
 	    'name' => FormManager\Builder::text()

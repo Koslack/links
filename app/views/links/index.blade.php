@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-	<a href="{{$app->urlFor('link.create')}}">Create link</a>
+	<a href="{{$app->urlFor('links.create')}}">Create link</a>
 	<ul>
 		@foreach($links as $link)
 			<li>

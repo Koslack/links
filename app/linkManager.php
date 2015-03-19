@@ -4,10 +4,10 @@ namespace App;
 use \Slim\Slim as Slim;
 use \Slim\Middleware\SessionCookie as SessionCookie;
 use \Slim\Views\Blade as Blade;
-use Respect\Validation\Exceptions\NestedValidationExceptionInterface as NestedValidationExceptionInterface;
-use Respect\Validation\Validator as Validator;
+use \Respect\Validation\Exceptions\NestedValidationExceptionInterface as NestedValidationExceptionInterface;
+use \Respect\Validation\Validator as Validator;
 
-class Links{
+class LinkManager{
 
 	protected $app;
 
@@ -15,7 +15,7 @@ class Links{
 		$this->app = new Slim([
 			# Adds application settings
 			'view' => new Blade(),
-			'templates.path' => '../templates'
+			'templates.path' => 'views'
 		]);
 		$this->app->add(new SessionCookie());
 
@@ -49,7 +49,7 @@ class Links{
 		# Defines /links/create/ route to show a form for link creation
 		$this->app->get('/links/create/', function(){
 			$this->app->render('links.create', ['app' => $this->app]);
-		})->name('link.create');
+		})->name('links.create');
 
 		# Defines /links POST route that handles the received data from the creation form and stores it
 		$this->app->post('/links', function(){
@@ -61,19 +61,19 @@ class Links{
 				$this->app->redirect('/links/' . $link->id);
 			else
 				$this->app->redirect('/links/create/');
-		})->name('link.store');
+		})->name('links.store');
 
 		# Defines /links/:id for showing a single link
 		$this->app->get('/links/:id', function($id){
 			$link = $this->getLink($id);
 			$this->app->render('links.show', ['link' => $link, 'app' => $this->app]);
-		})->name('link.show');
+		})->name('links.show');
 
 		# Defines /links/:id/edit/ route to show a form for a link edition
 		$this->app->get('/links/:id/edit/', function($id){
 			$link = $this->getLink($id);
 			$this->app->render('links.edit', ['link' => $link, 'app' => $this->app]);
-		})->name('link.edit');
+		})->name('links.edit');
 
 		# Defines /links/:id POST route that handles the received data from the edition form
 		$this->app->post('/links/:id', function($id){
@@ -84,14 +84,14 @@ class Links{
 				$this->app->redirect('/links');
 			else
 				$this->app->redirect("/links/$link->id/edit");
-		})->name('link.update');
+		})->name('links.update');
 
 		# Defines /links/:id/delete/ route that deletes an id specified link
 		$this->app->get('/links/:id/delete/', function($id){
 			$link = $this->getLink($id);
 			$link->delete();
 			$this->app->redirect('/links');
-		})->name('link.delete');
+		})->name('links.delete');
 
 		# start Slim
 		$this->app->run();
