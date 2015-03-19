@@ -7,6 +7,8 @@ use \Slim\Views\Blade as Blade;
 use \Respect\Validation\Exceptions\NestedValidationExceptionInterface as NestedValidationExceptionInterface;
 use \Respect\Validation\Validator as Validator;
 
+use Models\Link as Link;
+
 class LinkManager{
 
 	protected $app;
@@ -15,7 +17,7 @@ class LinkManager{
 		$this->app = new Slim([
 			# Adds application settings
 			'view' => new Blade(),
-			'templates.path' => 'views'
+			'templates.path' => '../app/views'
 		]);
 		$this->app->add(new SessionCookie());
 
@@ -25,7 +27,7 @@ class LinkManager{
 			'cache' => '../html_cache'
 		];
 
-		\ORM::configure('sqlite:../store/app.sqlite.db');
+		\ORM::configure('sqlite:../app/store/app.sqlite.db');
 		\ORM::configure('logging', true);
 
 		# Redirects to /links route
@@ -99,10 +101,7 @@ class LinkManager{
 
 	# Fetches links from the database starting from an offset and limited from 0 and 10 by default respectively
 	public function getLinks($limit = 10, $offset = 0){
-		$links = \ORM::forTable('links')
-			->limit($limit)
-			->offset($offset)
-			->findMany();
+		$links = \Model::factory('\\App\\Models\\Link')->limit($limit)->offset($offset)->findMany();
 		if(!$links)
 			$this->app->notFound();
 		else
@@ -111,7 +110,7 @@ class LinkManager{
 
 	# Fetches 1 link by id
 	public function getLink($id){
-		$link = \ORM::forTable('links')->findOne($id);
+		$link = \Model::factory('\\App\\Models\\Link')->findOne($id);
 		if(!$link)
 			$this->app->notFound();
 		else
@@ -129,7 +128,7 @@ class LinkManager{
 	}
 
 	public function newLink(){
-		$link = \ORM::forTable('links')->create();
+		$link = \Model::factory('\\App\\Models\\Link')->create();
 		return $link;
 	}
 
