@@ -9,7 +9,6 @@
 		"slim/slim": "~2.5",
 		"illuminate/database": "~4.2",
 		"clickcoder/slim-blade": "dev-master",
-		"form-manager/form-manager": "~4.0",
 		"respect/validation": "~0.8",
 		"zeuxisoo/slim-whoops": "0.3.0"
 	},
