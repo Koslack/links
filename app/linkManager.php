@@ -1,13 +1,13 @@
 <?php
 namespace App;
 
-use Slim\Slim as Slim;
-use Slim\Middleware\SessionCookie as SessionCookie;
-use Slim\Views\Blade as Blade;
-use Respect\Validation\Exceptions\NestedValidationExceptionInterface as NestedValidationExceptionInterface;
-use Respect\Validation\Validator as Validator;
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware as WhoopsMiddleware;
+use Slim\Slim as Slim;		//Provides framework to work with
+use Slim\Middleware\SessionCookie as SessionCookie;		//Allows us to manage flash messages
+use Slim\Views\Blade as Blade;		//Provides us with an ActiveRecord implementation
+use Respect\Validation\Exceptions\NestedValidationExceptionInterface as NestedValidationExceptionInterface;		//The validation type of exceptions
+use Respect\Validation\Validator as Validator;		//The class that provides us with validation for client's data
+use Illuminate\Database\Capsule\Manager as Capsule;		//Allows us to configure the Eloquent ActiveRecord implementation
+use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware as WhoopsMiddleware;		//provides us with a pretty errors handler
 
 use \App\Models\Link as Link;
 use \App\Models\Lookup as Lookup;
