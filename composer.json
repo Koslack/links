@@ -10,7 +10,8 @@
 		"illuminate/database": "~4.2",
 		"clickcoder/slim-blade": "dev-master",
 		"respect/validation": "~0.8",
-		"zeuxisoo/slim-whoops": "0.3.0"
+		"zeuxisoo/slim-whoops": "0.3.0",
+		"robmorgan/phinx": "*"
 	},
 	"autoload": {
 		"classmap": [
