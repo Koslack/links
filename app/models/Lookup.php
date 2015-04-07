@@ -1,7 +1,9 @@
 <?php
 namespace App\Models;
 
-class Lookup extends BaseModel{
+use Illuminate\Database\Eloquent\Model as Model;
+
+class Lookup extends Model{
 	protected $table = 'lookup';
 
 	public $timestamps = true;
